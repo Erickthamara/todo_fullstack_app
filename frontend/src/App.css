@@ -1,0 +1,96 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* height: 100%; */
+}
+body{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background: rgb(180, 160, 200);
+  line-height: 1.5;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+  /* align-items: center; */
+}
+.login-container{
+  border: 2px solid black;
+  width: 100%;
+  max-width: 1000px;
+  background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+}
+
+
+.login-card h2{
+  margin-top: 1em;
+  text-align: center;
+  font-size: 1.5rem;
+}
+.form-input{
+  display:block ;
+  width: 60vw;
+  height: 6vh;
+ 
+}
+.form-row{
+  margin-bottom: 1em;
+  padding: 1em 1em;
+  /* display: flex;
+  align-items: center;
+  flex-direction: column; */
+ 
+}
+.form-row label{
+  
+  margin-bottom: 0.5em;
+  font-size: 1em;
+  font-weight: 450;
+}
+
+.login-buttons{
+  display: flex;
+ justify-content: space-around;
+  width: 60vw;
+}
+
+.login-buttons button{
+  padding: 0.5em;
+  border-radius: 10%;
+  background: rgb(117, 117, 240);
+  color: rgb(234, 237, 239);
+  border-color: transparent;
+  cursor: pointer;
+  margin: 0.5em;
+}
+
+.login-buttons button:hover{
+  background: burlywood;
+  color: black;
+}
+
+/* @media (min-width: 600px) {
+  .form-input {
+    height: 2.5em;
+  }
+
+  .btn {
+    flex: none;
+    margin: 0;
+  } */
+
+
+
+
+
+
+
+
+

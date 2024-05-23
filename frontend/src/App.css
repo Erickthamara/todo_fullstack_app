@@ -16,8 +16,21 @@ body{
 
   /* align-items: center; */
 }
+
+h2{
+  font-size: 3.5em;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+h3{
+  font-size: 1.5em;
+  font-weight: 300;
+   margin-bottom: 2px;
+}
 .login-container{
   border: 2px solid black;
+  /* to go to 100% of the provided width  */
   width: 100%;
   max-width: 500px;
   background-color: aliceblue;
@@ -29,18 +42,12 @@ body{
 }
 
 
-.login-card h2{
+.login-container h2{
   margin-top: 1em;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
-.form-input{
-  display:block ;
-  width: 60vw;
-  height: 6.5vh;
-  max-width: 400px;
- 
-}
+
 .form-row{
   margin-bottom: 0.2em;
   padding: 1em 1em;
@@ -50,8 +57,15 @@ body{
   flex-direction: column; */
  
 }
+.form-input{
+  display:block ;
+  width: 60vw;
+  height: 6.5vh;
+  max-width: 400px;
+ 
+}
+
 .form-row label{
-  
   margin-bottom: 0.5em;
   font-size: 1em;
   font-weight: 450;
@@ -72,22 +86,30 @@ body{
   border-color: transparent;
   cursor: pointer;
   margin: 0.5em;
+  text-decoration: none;
 }
 
 .login-buttons button:hover{
   background: burlywood;
   color: black;
 }
-
-/* @media (min-width: 600px) {
-  .form-input {
-    height: 2.5em;
-  }
-
-  .btn {
-    flex: none;
-    margin: 0;
-  } */
+.error-card{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 400px;
+}
+.btn{
+  padding: 0.5em;
+  border-radius: 10%;
+  background: rgb(117, 117, 240);
+  color: rgb(234, 237, 239);
+  border-color: transparent;
+  cursor: pointer;
+  margin: 0.5em 1em;
+  text-decoration: none;
+}
 
 
 

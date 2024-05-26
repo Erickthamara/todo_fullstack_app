@@ -1,6 +1,8 @@
 import {React,useState,useEffect} from 'react'
 import PropTypes from 'prop-types'
+import axios from 'axios';
 
+// const axios = require('axios').default;
 
 const CreateAccount = () => {
 const [userName, setUserName] = useState('')
@@ -24,7 +26,16 @@ const handlePassword=(e)=>{
 }
 useEffect(() => {
     // console.log(`email is ${userEmail} and name is ${userName} and password is ${userPassword}`);
-    
+    const testGetData=async()=>{
+      try {
+        const rawData=await axios.get('http://127.0.0.1:5000/users/');
+        console.log(rawData.data.users);
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    testGetData()
+
 }, [userName,userEmail,userPassword])
 
 

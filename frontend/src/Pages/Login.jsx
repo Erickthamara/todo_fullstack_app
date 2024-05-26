@@ -1,10 +1,11 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Login = () => {
   return (
     <div className='login-container'>
         
-            <h2>Logins</h2>
+            <h2>Login</h2>
             <div className="form-row">
               <label htmlFor="name" className='form-label'>UserName</label>
               <input type="text"  id="name" className='form-input' />
@@ -19,7 +20,8 @@ const Login = () => {
             </div>
             <div className="login-buttons">
               <button className="btn">Sign In</button>
-              <button className="btn">Create Account</button>
+              <Link to='/Create/'className="btn">Create Account</Link>
+              {/* <button className="btn">Create Account</button> */}
             </div>
         
     </div>

@@ -5,8 +5,6 @@ import Error from './Pages/Error'
 import CreateAccount from './Pages/CreateAccount'
 
 function App() {
- 
-
   return (
     <>
     <BrowserRouter>

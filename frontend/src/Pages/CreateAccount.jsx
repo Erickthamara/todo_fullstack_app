@@ -11,17 +11,23 @@ const [userName, setUserName] = useState('')
 const [userEmail, setUserEmail] = useState('')
 const [userPassword, setUserPassword] = useState('')
 const [loading, setloading] = useState(false)
+const [buttonEnabled, setbuttonEnabled] = useState(true)
 
 const checkValidUserName=(userNameParam)=>{
-  if (checkValidString(userNameParam) !== true && userNameParam !== '') {
+  
+  if (checkValidString(userNameParam) !== true || userNameParam === '') {
     alert('Inavlid UserName')
+    return
   }
+  return true
 }
 
 const checkValidUserEmail=(userEmailParam)=>{
-  if (checkValidEmail(userEmailParam) !== true && userEmailParam !== '') {
+  if (checkValidEmail(userEmailParam) !== true || userEmailParam === '') {
     alert('Inavlid Email')
+    return
   }
+  return true
 }
 
 const checkValidUserPassword=(userPassword)=>{
@@ -33,12 +39,31 @@ const checkValidUserPassword=(userPassword)=>{
        alert('Password must be between 8 and 12 characters long');
        return
     } 
+  return true
 }
 
 const submitForm=()=>{
-    checkValidUserName(userName)
-    checkValidUserEmail(userEmail)
-    checkValidUserPassword(userPassword)
+console.log('works');
+  if (checkValidUserName(userName)!==true &&checkValidUserEmail(userEmail)!==true &&checkValidUserPassword(userPassword)!==true) {
+    alert('Invalid details')
+    return
+  }
+  setbuttonEnabled(false)
+
+  const createUser=async()=>{
+    try {
+      const data=await axios.post('http://127.0.0.1:5000/create_user/',{
+        userName:userName,
+        email:userEmail,
+        password:userPassword
+      })
+    
+    } catch (error) {
+       console.error(`Error 404: ${error}`)
+    }
+  }
+  createUser()
+   
 }
 
 const handleUserName=(e)=>{
@@ -54,24 +79,10 @@ const handlePassword=(e)=>{
     setUserPassword(e.target.value) 
 }
 useEffect(() => {
-   
     setUserName(userName)
-  
-
     setUserEmail(userEmail)
-   
     setUserPassword(userPassword)
-    // const testGetData=async()=>{
-    //   try {
-    //     const rawData=await axios.get('http://127.0.0.1:5000/users/');
-    //     console.log(rawData.data.users);
-    //   } catch (error) {
-    //     console.error(error)
-    //   }
-    // }
-    // testGetData()
-   
-
+  
 }, [userName,userEmail,userPassword])
 
 if (loading===true) return <Loading/>
@@ -82,18 +93,20 @@ if (loading===true) return <Loading/>
             <h2>Create Account</h2>
             <div className="form-row">
               <label htmlFor="name" className='form-label'>UserName</label>
-              <input type="text"  id="name" className='form-input' value={userName} onChange={handleUserName} />
+              <input type="text"  id="name" className='form-input' value={userName} onChange={handleUserName} onBlur={()=>checkValidUserName(userName)}  />
             </div>
             <div className="form-row">
               <label htmlFor="email" className='form-label'>Email</label>
-              <input type='email'  id="email" className='form-input' value={userEmail} onChange={handleEmail} />
+              <input type='email'  id="email" className='form-input' value={userEmail} onChange={handleEmail} onBlur={()=>checkValidUserEmail(userEmail)} />
             </div>
             <div className="form-row">
               <label htmlFor="password" className='form-label'>Password</label>
-              <input type='password'  id="password" className='form-input' onChange={handlePassword} />
+              <input type='password'  id="password" className='form-input' onChange={handlePassword} onBlur={()=>checkValidUserPassword(userPassword)} />
             </div>
+            
             <div className="login-buttons">
-              <button className="btn" onClick={submitForm}>Submit</button>
+              {buttonEnabled? <button className="btn" onClick={submitForm}  >Submit</button>:<button className="btn"  >Loading......</button>}
+              
             </div>
         
     </div>

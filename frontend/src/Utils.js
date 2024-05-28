@@ -4,7 +4,7 @@ let regex = /^[a-zA-Z]+$/;
 export const checkValidString=(aString)=>{
     return regex.test(aString)
 }
-console.log(checkValidString('sdsdds998d'));
+
 
 
 //=================Check for a valid email address=============================================

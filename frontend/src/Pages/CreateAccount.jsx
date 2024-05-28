@@ -3,6 +3,9 @@ import axios from 'axios';
 import { checkValidEmail, checkValidString } from '../Utils';
 import Error from './Error';
 import Loading from '../Components/Loading';
+// import useHistory from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 // const axios = require('axios').default;
 
@@ -12,6 +15,9 @@ const [userEmail, setUserEmail] = useState('')
 const [userPassword, setUserPassword] = useState('')
 const [loading, setloading] = useState(false)
 const [buttonEnabled, setbuttonEnabled] = useState(true)
+
+// let history=useHistory();
+let navigate=useNavigate();
 
 const checkValidUserName=(userNameParam)=>{
   
@@ -57,6 +63,9 @@ console.log('works');
         email:userEmail,
         password:userPassword
       })
+      // history.push('/')
+      navigate('/')
+      alert('User Successfully created')
     
     } catch (error) {
        console.error(`Error 404: ${error}`)

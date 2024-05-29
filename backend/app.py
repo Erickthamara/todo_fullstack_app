@@ -28,21 +28,25 @@ def create_user():
     
     return jsonify({"message":"User created successfully"}),201
 
-@app.route('/sign_in/<int:id>',methods=["GET"])
-def sign_in(id):
+@app.route('/sign_in/',methods=["POST"])
+def sign_in():
     email=request.json.get("email")
     password=request.json.get("password")
 
     if not email or not password:
          return jsonify({"message":"You must inlude an email and a password"}),400
     #==Get user from the database==
-    user=User.query.get(id)
+    # user=User.query.get()
+    user=User.query.filter_by(email=email).first()
 
     if not user:
          return jsonify({"message":"User not found"}),404
     
     if user.password==password:
+     
         return jsonify({"message":"Success.Password for the user is correct"}),200
+
+    return jsonify({"message":"Failed."}),402
     
 #==============================END APIs for the users table====================================
 

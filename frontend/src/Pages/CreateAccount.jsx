@@ -63,7 +63,6 @@ console.log('works');
         email:userEmail,
         password:userPassword
       })
-      // history.push('/')
       navigate('/')
       alert('User Successfully created')
     

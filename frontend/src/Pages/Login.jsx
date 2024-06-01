@@ -3,20 +3,21 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { checkValidEmail, checkValidString } from '../Utils';
 import axios from 'axios';
+import { useGlobalContext } from '../GlobalContext';
 
 const Login = () => {
-  const [userName, setUserName] = useState('')
-const [userEmail, setUserEmail] = useState('')
-const [userPassword, setUserPassword] = useState('')
-const [loading, setloading] = useState(false)
-const [buttonEnabled, setbuttonEnabled] = useState(true)
-let navigate=useNavigate();
+  
+  const{userEmail, setUserEmail,userPassword, setUserPassword,userId, setuserId}=useGlobalContext()
+ 
+  const [loading, setloading] = useState(false)
+
+  let navigate=useNavigate();
 
 
 const checkValidUserEmail=(userEmailParam)=>{
   if (checkValidEmail(userEmailParam) !== true || userEmailParam === '') {
     alert('Inavlid Email')
-    return
+    return false
   }
   return true
 }
@@ -49,28 +50,24 @@ const submitForm=()=>{
     alert('Invalid details')
     return
   }
-
-
   const signInUser=async()=>{
     try {
-    
-      const data=await axios.post('http://127.0.0.1:5000/sign_in/',{
-       
+      const data=await axios.post('http://127.0.0.1:5000/sign_in/',{  
         email:userEmail,
         password:userPassword
       })
-      // navigate('/')  //Navigate to the todo App,to be created
-      // alert('Success!')
-      // console.log(data.status);
+    //  console.log(data.data.userId);
       if (data.status===200)  alert(`Success`)
-      
-    
+        //=====Set the userId========
+      setuserId(data.data.userId)
+        navigate('Todo')  //Navigate to the todo App,to be created
+       
     } catch (error) {
        console.error(`Error 404: ${error}`)
+       alert ('An error occured.Backend servers might be down')
     }
   }
   signInUser()
-   
 }
   return (
     <div className='login-container'>
@@ -87,7 +84,7 @@ const submitForm=()=>{
             <div className="login-buttons">
               <button className="btn" onClick={submitForm}>Sign In</button>
               <Link to='/Create/'className="btn" >Create Account</Link>
-              {/* <button className="btn">Create Account</button> */}
+              
             </div>
         
     </div>

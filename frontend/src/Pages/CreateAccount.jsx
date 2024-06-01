@@ -16,7 +16,6 @@ const [userPassword, setUserPassword] = useState('')
 const [loading, setloading] = useState(false)
 const [buttonEnabled, setbuttonEnabled] = useState(true)
 
-// let history=useHistory();
 let navigate=useNavigate();
 
 const checkValidUserName=(userNameParam)=>{

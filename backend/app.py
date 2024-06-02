@@ -40,13 +40,15 @@ def sign_in():
     user=User.query.filter_by(email=email).first()
 
     if not user:
-         return jsonify({"message":"User not found"}),404
+         return jsonify({"message":"User not found.Wrong email entered"}),404
     
     if user.password==password:
-     
-        return jsonify({"message":"Success.Password for the user is correct"}),200
+        return jsonify({
+            "message":"Success.Password for the user is correct",
+            "userId":user.user_id
+            }),200
 
-    return jsonify({"message":"Failed."}),402
+    return jsonify({"message":"Wrong password."}),402
     
 #==============================END APIs for the users table====================================
 
@@ -54,12 +56,17 @@ def sign_in():
 
 #========================START APIs for the tasks table======================================
 
-@app.route('/tasks/',methods=['GET'])
-def get_tasks():
-    all_tasks=tasks.query.all()
-    print(f"taks are {all_tasks}")
-    json_tasks=list(map(lambda singleTask:singleTask.to_json(),all_tasks))
-    return jsonify({"tasks":json_tasks})
+@app.route('/tasks/<int:id>',methods=['GET'])
+def get_tasks(id):
+    tasksList=tasks.query.filter_by(user_id=id).all()
+    # tasksList=tasks.query.all()
+    # print(f"task lis t is{tasksList}")
+
+    
+    # json_tasks = [task.to_json() for task in tasksList]
+    json_tasks=list(map(lambda singletask:singletask.to_json(),tasksList))
+    # print(f"list is {json_tasks}")
+    return jsonify({"tasks":json_tasks}),200
 
 @app.route('/create_task/',methods=['POST'])
 def create_task():
@@ -112,6 +119,11 @@ def delete_task(id):
 
 #========================END APIs for the tasks table======================================
 
+# @app.after_request
+# def after_request(response):
+#     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+#     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+#     return response
   
 if __name__ == '__main__':
     with app.app_context():

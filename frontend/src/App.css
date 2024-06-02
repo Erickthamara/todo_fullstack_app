@@ -14,7 +14,6 @@ body{
   justify-content: center;
   height: 100vh;
 
-  /* align-items: center; */
 }
 
 h2{
@@ -109,6 +108,59 @@ h3{
   cursor: pointer;
   margin: 0.5em 1em;
   text-decoration: none;
+}
+
+.todo-input{
+  border: 2px solid black;
+  /* to go to 100% of the provided width  */
+  width: 100%;
+  max-width: 500px;
+  background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5em;
+  position: absolute;
+  top: 25px; 
+  left: 440px;
+  right: 50px;
+  
+}
+
+.description-input{
+   display:block ;
+  width: 60vw;
+  height: 15.5vh;
+  max-width: 400px;
+}
+
+.todos{
+    border: 2px solid black;
+  /* to go to 100% of the provided width  */
+  width: 100%;
+  max-width: 500px;
+  background-color: aliceblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5em;
+}
+.item{
+  padding: 0.5em;
+}
+.task{
+  display: inline-flex;
+  padding: 0.2em;
+  
+}
+.task button{
+  cursor: pointer;
+  text-decoration: none;
+   background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none; 
 }
 
 

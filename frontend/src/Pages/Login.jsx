@@ -65,6 +65,7 @@ const submitForm=()=>{
     } catch (error) {
        console.error(`Error 404: ${error}`)
        alert ('An error occured.Backend servers might be down')
+      //  console.err();
     }
   }
   signInUser()

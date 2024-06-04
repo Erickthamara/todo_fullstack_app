@@ -24,6 +24,7 @@ class tasks(db.Model):
     user_id=db.Column(db.Integer,db.ForeignKey('users.user_id'),nullable=False)
     title=db.Column(db.String(100),nullable=False)
     description=db.Column(db.String(255))
+    complete=db.Column(db.Boolean,default=False)
    
 
     def to_json(self):
@@ -31,5 +32,6 @@ class tasks(db.Model):
             "id":self.id,
             "userId":self.user_id,
             "title":self.title,
-            "description":self.description
+            "description":self.description,
+            "complete":self.complete
         }

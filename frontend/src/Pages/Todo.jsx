@@ -3,15 +3,14 @@ import { useGlobalContext } from '../GlobalContext'
 import axios from 'axios'
 import { FaCheck,FaTrash  } from "react-icons/fa";
 
-const listOfItems=[
-   
-]
+
 
 const Todo = () => {
     const {userEmail,userId}=useGlobalContext()
     const [title, settitle] = useState('')
     const [description, setdescription] = useState('')
-    const [items, setitems] = useState(listOfItems)
+    const [items, setitems] = useState([])
+    const [complete, setcomplete] = useState(false)
 
     const handleTodoTitle=(e)=>{
          e.preventDefault();
@@ -27,23 +26,23 @@ const Todo = () => {
 
         async function getTasks() {
              try {
-                console.log(`user id is ${userId}`);
+               // console.log(`user id is ${userId}`);
                   const data=await axios.get(`http://127.0.0.1:5000/tasks/${1}`,{ })
 
             // if (data.status===200)  alert(`Success`)
           
-            console.log(`data is ${JSON.stringify(data.data.tasks)}`);
+          //  console.log(`data is ${JSON.stringify(data.data.tasks)}`);
 
              let newTasks=data.data.tasks
-             console.log(newTasks);
+            // console.log(newTasks);
     
              setitems(newTasks)
-             console.log(items);
+            // console.log(items);
             // setitems(data.data)
 
             } catch (error) {
             console.error(`Error 404: ${error}`)
-            alert ('An error occured.Backend servers might be down')
+            alert ('Backend servers might be down')
             }
         }
         getTasks()
@@ -53,26 +52,46 @@ const Todo = () => {
     
 
 const submitTask=async()=>{
-    // console.log(items);
-    let newTask={id:items.length+1,header:title,description:description}
-    
-    setitems([...items,newTask])
-    // console.log(newTask);
-    // console.log(items.push(newTask));
-    // console.log(items);
+    //console.error(`${title} and ${description} and ${userId}`);
+    if (userId===null) console.log(`UserID not found`); 
      try {
       const data=await axios.post('http://127.0.0.1:5000/create_task/',{  
-        email:userEmail,
-        password:userPassword
+        title:title,
+        description:description,
+        userId:userId
       })
      
-      if (data.status===200)  alert(`Success`)
-        navigate('Todo')  //Navigate to the todo App,to be created
+      if (data.status===201)  alert(`Success`)
+      //  navigate('Todo')  //Navigate to the todo App,to be created
        
     } catch (error) {
        console.error(`Error 404: ${error}`)
        alert ('An error occured.Backend servers might be down')
     }
+}
+
+const deleteTask=(taskId)=>{
+  async function deleteItem(taskid) {
+     try {
+      const data=await axios.delete(`http://127.0.0.1:5000/delete_task/${taskid}`,{})
+     
+      if (data.status===200)  alert(`Success.TASK DELETED`)
+      //  navigate('Todo')  //Navigate to the todo App,to be created
+       
+    } catch (error) {
+       console.error(`Error 404: ${error}`)
+       alert ('An error occured.Backend servers might be down')
+       return
+    }
+    
+  }
+  deleteItem(taskId)
+  let aftereDeletedItems=items.filter((item)=>{
+    return item.id!==taskId
+  })
+ setitems(aftereDeletedItems)
+
+
 }
   
   
@@ -99,24 +118,22 @@ const submitTask=async()=>{
                 { items.map((task)=>{
                     const{id,title,description}=task
                     return  <div className="item" key={id}>
-                        <button><FaCheck /></button>
+                        <button onClick={()=>setcomplete(!complete)}><FaCheck /></button>
                        
                        <div className="task" key={id}> 
-                             <h3>{title}</h3>
-                            <h4>{description}</h4>
+                             {/* <h3 >{title}</h3> */}
+                              <h3 style={complete?{ textDecoration: 'line-through' }:{ textDecoration: 'none' }}>{title}</h3>
+                            <h4 style={complete?{ textDecoration: 'line-through' }:{ textDecoration: 'none' }}>{description}</h4>
+                         
                         </div> 
-                            <button><FaTrash/></button>
+                            <button onClick={()=>deleteTask(id)}><FaTrash/></button>
                         
                              </div>
-                        
-                        
                     
                 })}
                  </>}
              
-       
-         
-        
+    
     </div>
     </div>
 

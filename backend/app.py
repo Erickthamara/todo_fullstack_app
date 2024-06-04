@@ -59,19 +59,16 @@ def sign_in():
 @app.route('/tasks/<int:id>',methods=['GET'])
 def get_tasks(id):
     tasksList=tasks.query.filter_by(user_id=id).all()
-    # tasksList=tasks.query.all()
-    # print(f"task lis t is{tasksList}")
-
-    
-    # json_tasks = [task.to_json() for task in tasksList]
+  
     json_tasks=list(map(lambda singletask:singletask.to_json(),tasksList))
-    # print(f"list is {json_tasks}")
+ 
     return jsonify({"tasks":json_tasks}),200
 
 @app.route('/create_task/',methods=['POST'])
 def create_task():
     user_id=request.json.get("userId")
     title=request.json.get("title")
+    complete=request.json.get("complete")
     description=request.json.get("description")
 
     if not user_id or not title :
@@ -79,7 +76,7 @@ def create_task():
     if not description:
         description=''
     
-    new_task=tasks(user_id=user_id,title=title,description=description)
+    new_task=tasks(user_id=user_id,title=title,description=description,complete=complete)
     try:
         db.session.add(new_task)
         db.session.commit()
@@ -99,6 +96,7 @@ def update_task(id):
     #==We get the column data we want from the json received and update our DB.If not we persist the old data==
     task.title=data.get("title",task.title)
     task.description=data.get("description",task.description)
+    task.complete=data.get("complete",task.complete)
 
     db.session.commit()
 
@@ -119,11 +117,6 @@ def delete_task(id):
 
 #========================END APIs for the tasks table======================================
 
-# @app.after_request
-# def after_request(response):
-#     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-#     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-#     return response
   
 if __name__ == '__main__':
     with app.app_context():

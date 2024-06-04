@@ -90,6 +90,36 @@ const deleteTask=(taskId)=>{
     return item.id!==taskId
   })
  setitems(aftereDeletedItems)
+}
+const handleTaskUpadte=(taskid,complete)=>{
+  
+  async function updateComlpete(taskid) {
+    
+     try {
+      const data=await axios.patch(`http://127.0.0.1:5000/update_task/${taskid}`,{
+        complete:!complete
+      })
+     
+      if (data.status===200)  alert(`Success.TASK UPDATED`)
+      //  navigate('Todo')  //Navigate to the todo App,to be created
+       
+    } catch (error) {
+       console.error(`Error 404: ${error}`)
+       alert ('An error occured.Backend servers might be down')
+       return
+    }
+    
+  }
+  updateComlpete(taskid)
+  let newArray=items.map((item)=>{
+      if (item.id===taskid){
+        return {...item,complete:!item.complete}
+      }
+      return item
+    })
+   setitems(newArray);
+
+
 
 
 }
@@ -116,9 +146,9 @@ const deleteTask=(taskId)=>{
                  <h2>Todos</h2>
                  {items.length<1? '' : <>
                 { items.map((task)=>{
-                    const{id,title,description}=task
+                    const{id,title,description,complete}=task
                     return  <div className="item" key={id}>
-                        <button onClick={()=>setcomplete(!complete)}><FaCheck /></button>
+                        <button onClick={()=>handleTaskUpadte(id,complete)}><FaCheck /></button>
                        
                        <div className="task" key={id}> 
                              {/* <h3 >{title}</h3> */}
@@ -127,7 +157,6 @@ const deleteTask=(taskId)=>{
                          
                         </div> 
                             <button onClick={()=>deleteTask(id)}><FaTrash/></button>
-                        
                              </div>
                     
                 })}

@@ -26,15 +26,15 @@ const Todo = () => {
 
         async function getTasks() {
              try {
-               // console.log(`user id is ${userId}`);
-                  const data=await axios.get(`http://127.0.0.1:5000/api/tasks/${1}`,{ })
+          
+                  const data=await axios.get(`http://127.0.0.1:5000/api/tasks/${userId}`,{ })
 
             // if (data.status===200)  alert(`Success`)
           
-          //  console.log(`data is ${JSON.stringify(data.data.tasks)}`);
+    
 
              let newTasks=data.data.tasks
-            // console.log(newTasks);
+           
     
              setitems(newTasks)
             // console.log(items);
@@ -146,14 +146,15 @@ const handleTaskUpadte=(taskid,complete)=>{
                  <h2>Todos</h2>
                  {items.length<1? '' : <>
                 { items.map((task)=>{
-                    const{id,title,description,complete}=task
+                  
+                    const{id,task_title,task_description,complete}=task
                     return  <div className="item" key={id}>
                         <button onClick={()=>handleTaskUpadte(id,complete)}><FaCheck /></button>
                        
                        <div className="task" key={id}> 
                              {/* <h3 >{title}</h3> */}
-                              <h3 style={complete?{ textDecoration: 'line-through' }:{ textDecoration: 'none' }}>{title}</h3>
-                            <h4 style={complete?{ textDecoration: 'line-through' }:{ textDecoration: 'none' }}>{description}</h4>
+                              <h3 style={complete?{ textDecoration: 'line-through' }:{ textDecoration: 'none' }}>{task_title}</h3>
+                            <h4 style={complete?{ textDecoration: 'line-through' }:{ textDecoration: 'none' }}>{task_description}</h4>
                          
                         </div> 
                             <button onClick={()=>deleteTask(id)}><FaTrash/></button>

@@ -134,18 +134,28 @@ def create_task():
     
     return jsonify({"message":"Task created successfully"}),201
 
-# @app.route('/api/update_task/<int:id>',methods=['PATCH'])
-# def update_task(id):
-#     task=tasks.query.get(id)
+@app.route('/api/update_task/<int:id>',methods=['PATCH'])
+def update_task(id):
+    try:
+        response = supabase.table("tasks").select("*").eq('id',id).execute()
+        # print(response)
+        task=response.data
+        # print(json_tasks)
+        # print(data)
 
-#     if not task:
-#         return jsonify({"message":"Task not found"}),404
+    except Exception as e:
+        print(f'Error is::{e}')
+        return jsonify({"message":str(e)}),402
+
+    if not task:
+        return jsonify({"message":"Task not found"}),404
+    print(task)
     
-#   data = supabase.table("countries").update({"country": "Indonesia", "capital_city": "Jakarta"}).eq("id", 1).execute()
+    data = supabase.table("tasks").update({"complete": not(task[0]['complete'])}).eq("id", id).execute()
 
-#     db.session.commit()
 
-#     return jsonify({"message":"Task updated"}),200
+
+    return jsonify({"message":"Task updated"}),200
 
 @app.route('/api/delete_task/<int:id>',methods=['DELETE'])
 def delete_task(id):

@@ -57,9 +57,16 @@ const submitForm=()=>{
         password:userPassword
       })
     //  console.log(data.data.userId);
-      if (data.status===200)  alert(`Success`)
+    // console.log(data);
+      if (data.status===200) {
+        alert(`Success`)
+      } else if (data.status===402) {
+        alert('Wrong Password')
+        return
+      }
         //=====Set the userId========
-      setuserId(data.data.userId)
+        setuserId(data.data.userId)
+
         navigate('Todo')  //Navigate to the todo App,to be created
        
     } catch (error) {

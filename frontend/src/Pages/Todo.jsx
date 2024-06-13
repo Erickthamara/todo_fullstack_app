@@ -27,7 +27,7 @@ const Todo = () => {
         async function getTasks() {
              try {
                // console.log(`user id is ${userId}`);
-                  const data=await axios.get(`http://127.0.0.1:5000/tasks/${1}`,{ })
+                  const data=await axios.get(`http://127.0.0.1:5000/api/tasks/${1}`,{ })
 
             // if (data.status===200)  alert(`Success`)
           
@@ -55,7 +55,7 @@ const submitTask=async()=>{
     //console.error(`${title} and ${description} and ${userId}`);
     if (userId===null) console.log(`UserID not found`); 
      try {
-      const data=await axios.post('http://127.0.0.1:5000/create_task/',{  
+      const data=await axios.post('http://127.0.0.1:5000/api/create_task/',{  
         title:title,
         description:description,
         userId:userId
@@ -73,7 +73,7 @@ const submitTask=async()=>{
 const deleteTask=(taskId)=>{
   async function deleteItem(taskid) {
      try {
-      const data=await axios.delete(`http://127.0.0.1:5000/delete_task/${taskid}`,{})
+      const data=await axios.delete(`http://127.0.0.1:5000/api/delete_task/${taskid}`,{})
      
       if (data.status===200)  alert(`Success.TASK DELETED`)
       //  navigate('Todo')  //Navigate to the todo App,to be created
@@ -96,7 +96,7 @@ const handleTaskUpadte=(taskid,complete)=>{
   async function updateComlpete(taskid) {
     
      try {
-      const data=await axios.patch(`http://127.0.0.1:5000/update_task/${taskid}`,{
+      const data=await axios.patch(`http://127.0.0.1:5000/api/update_task/${taskid}`,{
         complete:!complete
       })
      

@@ -57,7 +57,7 @@ console.log('works');
 
   const createUser=async()=>{
     try {
-      const data=await axios.post('http://127.0.0.1:5000/create_user/',{
+      const data=await axios.post('http://127.0.0.1:5000/api/create_user/',{
         userName:userName,
         email:userEmail,
         password:userPassword

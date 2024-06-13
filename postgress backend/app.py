@@ -1,9 +1,9 @@
 from flask import Flask,jsonify,request
 import os
-import psycopg2
 from dotenv import load_dotenv
 from supabase import create_client
-import json
+from flask_cors import CORS
+
 
 # ============Reads the environment variables from .env into this file=====================
 load_dotenv()
@@ -17,19 +17,9 @@ supabase=create_client(url,key)
 
 
 app=Flask(__name__)
+CORS(app)
 
-# @app.route("/api/tasks",methods=['GET'])
-# def getUsers():
-#     try:
-#         response = supabase.table("tasks").select("*").execute()
-#         print(response)
-#         data=response.data
-#         print(data)
-      
-#     except Exception as e:
-#         print(f'Error is::{e}')
 
-#     return jsonify(data),201
 
 #==============================START APIs for the users table====================================
 @app.route('/api/users/',methods=['GET'])

@@ -30,12 +30,7 @@ const Todo = () => {
                   const data=await axios.get(`http://127.0.0.1:5000/api/tasks/${userId}`,{ })
 
             // if (data.status===200)  alert(`Success`)
-          
-    
-
              let newTasks=data.data.tasks
-           
-    
              setitems(newTasks)
             // console.log(items);
             // setitems(data.data)
@@ -58,16 +53,31 @@ const submitTask=async()=>{
       const data=await axios.post('http://127.0.0.1:5000/api/create_task/',{  
         title:title,
         description:description,
-        userId:userId
+        userId:userId,
+        complete:false
       })
      
       if (data.status===201)  alert(`Success`)
-      //  navigate('Todo')  //Navigate to the todo App,to be created
+        let newItem={
+      "task_title":title,
+      "task_description":description,
+      userId:userId,
+      complete:false
+    }
+    // console.log(items);
+    // console.log(newItem);
+    let newlist=[...items,newItem]
+    
+    // Update state using functional form of setitems
+    setitems(newlist);
+    // console.log(items);
        
     } catch (error) {
        console.error(`Error 404: ${error}`)
-       alert ('An error occured.Backend servers might be down')
+       alert (`Error:${error}`)
     }
+    
+    // setitems()
 }
 
 const deleteTask=(taskId)=>{

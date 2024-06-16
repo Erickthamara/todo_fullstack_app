@@ -25,7 +25,7 @@ CORS(app)
 @app.route('/api/users/',methods=['GET'])
 def get_users():
     try:
-        response = supabase.table("todo_Users").select("*").execute()
+        response = supabase.table("todo_Users").select("username").execute()
         # print(response)
         data=response.data
         # print(data)

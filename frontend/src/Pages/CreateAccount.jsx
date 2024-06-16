@@ -5,6 +5,7 @@ import Error from './Error';
 import Loading from '../Components/Loading';
 // import useHistory from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import API_URL from '../../config';
 
 
 // const axios = require('axios').default;
@@ -48,7 +49,7 @@ const checkValidUserPassword=(userPassword)=>{
 }
 
 const submitForm=()=>{
-console.log('works');
+
   if (checkValidUserName(userName)!==true &&checkValidUserEmail(userEmail)!==true &&checkValidUserPassword(userPassword)!==true) {
     alert('Invalid details')
     return
@@ -57,7 +58,7 @@ console.log('works');
 
   const createUser=async()=>{
     try {
-      const data=await axios.post('http://127.0.0.1:5000/api/create_user/',{
+      const data=await axios.post(`${API_URL}/create_user/`,{
         userName:userName,
         email:userEmail,
         password:userPassword

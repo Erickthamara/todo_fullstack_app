@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { checkValidEmail, checkValidString } from '../Utils';
 import axios from 'axios';
 import { useGlobalContext } from '../GlobalContext';
+import API_URL from '../../config';
 
 const Login = () => {
   
@@ -52,7 +53,7 @@ const submitForm=()=>{
   }
   const signInUser=async()=>{
     try {
-      const data=await axios.post('http://127.0.0.1:5000/api/sign_in/',{  
+      const data=await axios.post(`${API_URL}/sign_in/`,{  
         email:userEmail,
         password:userPassword
       })

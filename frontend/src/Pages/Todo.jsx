@@ -2,6 +2,7 @@ import {React,useState,useEffect} from 'react'
 import { useGlobalContext } from '../GlobalContext'
 import axios from 'axios'
 import { FaCheck,FaTrash  } from "react-icons/fa";
+import API_URL from '../../config';
 
 
 
@@ -27,7 +28,7 @@ const Todo = () => {
         async function getTasks() {
              try {
           
-                  const data=await axios.get(`http://127.0.0.1:5000/api/tasks/${userId}`,{ })
+                  const data=await axios.get(`${API_URL}/tasks/${userId}`,{ })
 
             // if (data.status===200)  alert(`Success`)
              let newTasks=data.data.tasks
@@ -50,7 +51,7 @@ const submitTask=async()=>{
     //console.error(`${title} and ${description} and ${userId}`);
     if (userId===null) console.log(`UserID not found`); 
      try {
-      const data=await axios.post('http://127.0.0.1:5000/api/create_task/',{  
+      const data=await axios.post(`${API_URL}/create_task/`,{  
         title:title,
         description:description,
         userId:userId,
@@ -83,7 +84,7 @@ const submitTask=async()=>{
 const deleteTask=(taskId)=>{
   async function deleteItem(taskid) {
      try {
-      const data=await axios.delete(`http://127.0.0.1:5000/api/delete_task/${taskid}`,{})
+      const data=await axios.delete(`${API_URL}/delete_task/${taskid}`,{})
      
       if (data.status===200)  alert(`Success.TASK DELETED`)
       //  navigate('Todo')  //Navigate to the todo App,to be created
@@ -106,7 +107,7 @@ const handleTaskUpadte=(taskid,complete)=>{
   async function updateComlpete(taskid) {
     
      try {
-      const data=await axios.patch(`http://127.0.0.1:5000/api/update_task/${taskid}`,{
+      const data=await axios.patch(`${API_URL}/update_task/${taskid}`,{
         complete:!complete
       })
      

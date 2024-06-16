@@ -70,8 +70,7 @@ def sign_in():
         # Assert we pulled real data.
         assert len(data.data) > 0
         user=data.data[0]
-        # print(user)
-        # print(user.get('password'))
+       
         
 
     except Exception as e:
@@ -79,8 +78,7 @@ def sign_in():
 
     if not user:
          return jsonify({"message":"User not found.Wrong email entered"}),404
-    
-    # print(user[password])
+
     
     if user.get('password')==userPassword:
         return jsonify({
@@ -100,13 +98,12 @@ def sign_in():
 def get_tasks(id):
     try:
         response = supabase.table("tasks").select("*").eq('todo_UserId',id).execute()
-        # print(response)
+       
         json_tasks=response.data
-        # print(json_tasks)
-        # print(data)
+      
 
     except Exception as e:
-        print(f'Error is::{e}')
+        # print(f'Error is::{e}')
         return jsonify({"message":str(e)}),402
 
  
@@ -123,7 +120,7 @@ def create_task():
         return jsonify({"message":"You must inlude a userId and title"}),400
     if not description:
         description=''
-    print(f'complete is {complete}')
+    
     
     try:
         data = supabase.table("tasks").insert({f"todo_UserId":user_id,"task_title":title,"task_description":description,"complete":complete}).execute()
@@ -139,10 +136,9 @@ def create_task():
 def update_task(id):
     try:
         response = supabase.table("tasks").select("*").eq('id',id).execute()
-        # print(response)
+    
         task=response.data
-        # print(json_tasks)
-        # print(data)
+        
 
     except Exception as e:
         print(f'Error is::{e}')
@@ -150,7 +146,7 @@ def update_task(id):
 
     if not task:
         return jsonify({"message":"Task not found"}),404
-    print(task)
+ 
     
     data = supabase.table("tasks").update({"complete": not(task[0]['complete'])}).eq("id", id).execute()
 
@@ -162,11 +158,10 @@ def update_task(id):
 def delete_task(id):
     try:
         response = supabase.table("tasks").select("*").eq('id',id).execute()
-        # print(response)
+       
         task=response.data
        
-        # print(json_tasks)
-        # print(data)
+       
 
     except Exception as e:
         print(f'Error is::{e}')

@@ -123,6 +123,7 @@ def create_task():
         return jsonify({"message":"You must inlude a userId and title"}),400
     if not description:
         description=''
+    print(f'complete is {complete}')
     
     try:
         data = supabase.table("tasks").insert({f"todo_UserId":user_id,"task_title":title,"task_description":description,"complete":complete}).execute()
